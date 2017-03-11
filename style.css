@@ -27,3 +27,8 @@ body {
     width: 32.9%;
   }
 }
+.header {
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+}
