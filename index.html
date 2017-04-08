@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    body {
+      margin: 0px;
+      background: #222222;
+      font-family: "SF UI Display", "Helvetica Neue", "Raleway", sans-serif;
+      font-weight: 100;
+      font-size: 30px;
+      color: white;
+      overflow: hidden;
+    }
+    div.player {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      z-index: 0;
+    }
+    div.inner {
+      display: block;
+    }
+    .player img {
+      width: 400px;
+      height: 400px;
+      opacity: 0;
+      transition: opacity 0.1s ease-out;
+    }
+    .player img:hover {
+      opacity: 1;
+    }
+    .image {
+      width: 400px;
+      height: 400px;
+      background-size: 400px;
+    }
+    div.text {
+      text-align: center;
+      font-size: 35px;
+      margin-top: 30px;
+    }
+    span.artist {
+      font-weight: 500;
+    }
+    img.bg {
+      filter: blur(2vw);
+      position: absolute;
+      top: -10vw;
+      left: -10vw;
+      width: 120vw;
+      height: 120vw;
+      z-index: -1;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s ease-out;
+    }
+    a:hover {
+      color: #bbb;
+    }
+    </style>
+  </head>
+  <body><img class="bg" src="">
+    <div class="player"><div class="inner">
+      <div class="image"><img src="play.png"></div>
+      <a href=""><div class="text">
+        <span class="artist"></span> <span class="title"></span>
+      </div></a>
+      <audio src=""></audio>
+    </div></div>
+    <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script>
+      var playState = 0;
+      function load() {
+        var meta = {
+          title: 'Before',
+          artist: 'stereofield',
+          artwork: 'https://i1.sndcdn.com/artworks-000216359813-ssf3ae-t500x500.jpg',
+          src: 'before.mp3',
+          link: 'https://soundcloud.com/stereofld/before'
+        };
+        // Fill Out Template
+        $('.image').css('background-image', 'url(' + meta.artwork + ')');
+        $('img.bg').attr('src', meta.artwork);
+        $('span.artist').text(meta.artist);
+        $('span.title').text(meta.title);
+        $('title').text(meta.artist + ' - ' + meta.title);
+        $('audio').attr('src', meta.src);
+        $('head').append('<link rel="shortcut icon" href="' + meta.artwork + '">')
+        $('div.player a').attr('href', meta.link);
+      }
+      // Make it Play
+      function playPause() {
+        if(playState === 0) {
+          $('.image img').attr('src', 'pause.png');
+          $('audio').trigger('play');
+          playState = 1;
+        } else {
+          $('.image img').attr('src', 'play.png');
+          $('audio').trigger('pause');
+          playState = 0;
+        }
+      }
+      // Press Space
+      $('body').keypress(function(key) {
+        if(key.which == 32) {
+          playPause();
+        }
+      });
+      // Execute Code
+      $(load);
+      $('.image').click(playPause);
+    </script>
+  </body>
+</html>
